@@ -1,0 +1,7 @@
+    1  git clone https://github.com/markwartpatryk/wsb_pai_dlinz_2_K15_Inf.git
+    2  ls
+    3  cd wsb_pai_dlinz_2_K15_Inf/
+    4  ls
+    5  clear
+    6  history
+    7  history > filehistory
