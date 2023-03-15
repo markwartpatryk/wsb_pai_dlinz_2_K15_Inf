@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Mar 2023, 12:09
+-- Czas generowania: 15 Mar 2023, 13:55
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.2
 
@@ -46,11 +46,30 @@ INSERT INTO `cities` (`id`, `state_id`, `city`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `countries`
+--
+
+CREATE TABLE `countries` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `country` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `countries`
+--
+
+INSERT INTO `countries` (`id`, `country`) VALUES
+(1, 'Polska');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `states`
 --
 
 CREATE TABLE `states` (
   `id` int(10) UNSIGNED NOT NULL,
+  `country_id` int(10) UNSIGNED NOT NULL,
   `state` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -58,10 +77,10 @@ CREATE TABLE `states` (
 -- Zrzut danych tabeli `states`
 --
 
-INSERT INTO `states` (`id`, `state`) VALUES
-(1, 'Wielkopolskie'),
-(2, 'Zachodniopomorskie'),
-(3, 'Śląskie');
+INSERT INTO `states` (`id`, `country_id`, `state`) VALUES
+(1, 1, 'Wielkopolskie'),
+(2, 1, 'Zachodniopomorskie'),
+(3, 1, 'Śląskie');
 
 -- --------------------------------------------------------
 
@@ -98,10 +117,17 @@ ALTER TABLE `cities`
   ADD KEY `state_id` (`state_id`);
 
 --
+-- Indeksy dla tabeli `countries`
+--
+ALTER TABLE `countries`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `states`
 --
 ALTER TABLE `states`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `country_id` (`country_id`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -119,6 +145,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `cities`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT dla tabeli `countries`
+--
+ALTER TABLE `countries`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT dla tabeli `states`
@@ -141,6 +173,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `cities`
   ADD CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`);
+
+--
+-- Ograniczenia dla tabeli `states`
+--
+ALTER TABLE `states`
+  ADD CONSTRAINT `states_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`);
 
 --
 -- Ograniczenia dla tabeli `users`

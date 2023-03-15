@@ -12,7 +12,9 @@
    
    <?php
    require_once "../scripts/connect.php";
-   $sql = "SELECT * FROM users inner join cities on users.city_id = cities.id";
+   $sql = "SELECT * FROM users inner join cities on users.city_id = cities.id
+   inner join states on cities.state_id = states.id
+   inner join countries on states.country_id = countries.id";
    $result = $conn->query($sql);
    echo <<< USERSTABLE
    <table>
@@ -21,6 +23,8 @@
        <th>Nazwisko</th>
        <th>Data_Urodzenia</th>
        <th>Miasto</th>
+       <th>Województwo</th>
+       <th>Państwo</th>
     </tr>
    USERSTABLE;
    while($user = $result->fetch_assoc()){
@@ -30,6 +34,8 @@
             <td>$user[lastName]</td>
             <td>$user[birthday]</td>
             <td>$user[city]</td>
+            <td>$user[state]</td>
+            <td>$user[country]</td>
         </tr>
     USERS;
    }
