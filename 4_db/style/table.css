@@ -1,0 +1,7 @@
+table, tr, th, td{
+    border: solid 2px blue;
+    text-align: center;
+    padding: 10px;
+    border-collapse: collapse;
+    background-color: rgb(127, 226, 188);
+}

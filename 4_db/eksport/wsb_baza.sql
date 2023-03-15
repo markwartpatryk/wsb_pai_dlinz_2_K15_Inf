@@ -40,9 +40,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `birthday`) VALUES
-(7, 'Patryk ', 'Markwart', '1999-06-21'),
-(11, 'Grzegorz ', 'Niedbalski', '1999-04-23'),
-(12, 'Jakub', 'Mikołajczak', '1999-05-16');
+(1, 'Patryk', 'Markwart', '1999-06-21'),
+(2, 'Grzegorz', 'Niedbalski', '1999-04-23'),
+(3, 'Jakub', 'Mikołajczak', '1999-05-16');
 
 --
 -- Indeksy dla zrzutów tabel
