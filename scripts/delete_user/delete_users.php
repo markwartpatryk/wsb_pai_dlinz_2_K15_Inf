@@ -11,6 +11,6 @@
         //echo "Nie usunieto rekordu";
         $deleted = 0;
    }
-   header("location: ../../4_db/3_db.php?deleted=$deleted");
+   header("location: ../../4_db/3_db_update.php?deleted=$deleted");
 ?>
 

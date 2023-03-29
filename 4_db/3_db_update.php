@@ -48,7 +48,7 @@
                 <td>$user[state]</td>
                 <td>$user[country]</td>
                 <td><a href="../scripts/delete_user/delete_users.php?deleteUserId=$user[id]">Usun</a></td>
-                <td><a href="./3_db.php?updteUserId=$user[id]">Edytuj</a></td>
+                <td><a href="./3_db_update.php?updteUserId=$user[id]">Edytuj</a></td>
             </tr>
         USERS;
        }
@@ -102,7 +102,13 @@
    }else{
     echo "<br>";
     echo "<br>";
-    echo'<a href="./3_db.php?addUserForm=1">Dodaj użytkownika</a>';
+    echo'<a href="./3_db_update.php?addUserForm=1">Dodaj użytkownika</a>';
+   }
+
+   if (isset($_GET["updateUserId"])){
+        echo <<< UPDATEUSER
+            <h4>Aktualizacja użytkownika</h4>
+        UPDATEUSER;
    }
    ?>
    

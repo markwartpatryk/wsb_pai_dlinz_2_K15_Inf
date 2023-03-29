@@ -32,7 +32,7 @@
                 <td>$city[id]</td>
                 <td>$city[city]</td>
                 <td>$city[state]</td>
-                <td><a href="../scripts/delete_user/delete_users.php?deleteCity=$city[id]">Usun</a></td>
+                <td><a href="../scripts/delete_user/delete_city.php?deleteCity=$city[id]">Usun</a></td>
             </tr>
         USERS;
        }
@@ -52,6 +52,7 @@
         echo "<br>Nie usunieto miasta.";
    }
    ?>
+   
    
 </body>
 </html>
