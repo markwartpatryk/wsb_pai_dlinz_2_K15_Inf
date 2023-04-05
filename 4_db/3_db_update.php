@@ -18,7 +18,7 @@
    if(isset($_SESSION["error"])){
         echo $_SESSION["error"];
         unset($_SESSION["error"]);
-   }
+   } 
    require_once "../scripts/connect.php";
    $sql = "SELECT users.id, users.firstName, users.lastName, users.birthday, cities.city, states.state, countries.country FROM users inner join cities on users.city_id = cities.id
    inner join states on cities.state_id = states.id
@@ -48,7 +48,7 @@
                 <td>$user[state]</td>
                 <td>$user[country]</td>
                 <td><a href="../scripts/delete_user/delete_users.php?deleteUserId=$user[id]">Usun</a></td>
-                <td><a href="./3_db_update.php?updteUserId=$user[id]">Edytuj</a></td>
+                <td><a href="./3_db_update.php?updateUserId=$user[id]">Edytuj</a></td>
             </tr>
         USERS;
        }
@@ -71,6 +71,7 @@
                 echo "<br>";
         }
     }
+    //dodawanie użytkonika
    if (isset($_GET["addUserForm"])){
     echo <<< ADDUSERFORM
         <h4><h4>Dodawanie użytkownika</h4>
@@ -93,7 +94,10 @@
             </select>
             <br>
             <br>
-            <input type="date" name="birthday"> Data urodzenia<br><br>
+            Data urodzenia:<br>
+            <input type="date" name="birthday"><br><br>
+            <br>
+            <input type="checkbox" name="term" checked>Regulamin<br><br>
             <br>
             <input type="submit" value="Dodaj użytkownika">
             </form>
@@ -104,12 +108,50 @@
     echo "<br>";
     echo'<a href="./3_db_update.php?addUserForm=1">Dodaj użytkownika</a>';
    }
-
+//aktualizacja użytkownika
    if (isset($_GET["updateUserId"])){
-        echo <<< UPDATEUSER
-            <h4>Aktualizacja użytkownika</h4>
-        UPDATEUSER;
-   }
+    $sql ="SELECT * from users WHERE id = $_GET[updateUserId]";
+    $result = $conn->query($sql);
+    $updateUser = $result->fetch_assoc();
+    $_SESSION["updateUserId"]= $_GET["updateUserId"];
+        echo <<< UPDATEUSERFORM
+            <h4><h4>Aktualizacja użytkownika</h4>
+            <form action="../scripts/update_user.php" method="post">
+                Imię:<br>
+                <input type="text" name="firstName" placeholder="Podaj imię" value="$updateUser[firstName]"autofocus><br><br>
+                Nazwisko:<br>
+                <input type="text" name="lastName" placeholder="Podaj nazwisko" value="$updateUser[lastName]"><br><br>
+                Miasto:<br>
+                <select name = "city_id">
+        UPDATEUSERFORM;
+                $sql = "SELECT * from cities";
+                $result = $conn->query($sql);
+                while($city = $result->fetch_assoc()){
+                    if($updateUser["city_id"]==$city["id"]){
+                        echo <<< CITY
+                            <option value="$city[id]" selected> $city[city]</option>    
+                        CITY; 
+                    }else{
+                        echo <<< CITY
+                            <option value="$city[id]"> $city[city]</option>    
+                        CITY;
+                    }
+                    
+                }
+            echo <<< UPDATEUSERFORM
+                </select>
+                <br>
+                <br>
+                Data urodzenia:<br>
+                <input type="date" name="birthday" value="$updateUser[birthday]"><br><br>
+                <br>
+                <input type="submit" value="Aktualizuj użytkownika">
+                </form>
+    
+            UPDATEUSERFORM;
+    }
+    $conn->close();
+   
    ?>
    
    

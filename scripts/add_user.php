@@ -1,15 +1,25 @@
 <?php
     session_start();
     //print_r($_POST);
+    $error = 0;
 
     foreach($_POST as $key => $value){
         //echo "$key: $value<br>";
         if(empty($value)){
             //echo "$key<br>";
             $_SESSION["error"] = "Wypełnij wszystkie pola w formularzu!";
-            echo"<script>history.back();</script>";
+            echo "<script>history.back();</script>";
             exit();
         }
+    }
+
+    if (!isset($_POST["term"])){
+        $_SESSION["error"] = "Zatwierdź regulamin!!";
+        $error++;
+    }
+    if($error!=0){
+        echo "<script>history.back();</script>";
+        exit();
     }
 require_once "./connect.php";
 $sql = "INSERT INTO `users` (`id`, `city_id`, `firstName`, `lastName`, `birthday`) VALUES (NULL, '$_POST[city_id]', '$_POST[firstName]', '$_POST[lastName]', '$_POST[birthday]');";

@@ -1,7 +1,13 @@
 table, tr, th, td{
-    border: solid 2px rgb(255, 0, 64);
+    border: solid 2px rgb(97, 12, 146);
     text-align: center;
     padding: 11px;
     border-collapse: collapse;
-    background-color: rgb(240, 147, 235);
+    background-color: rgb(113, 228, 180);
+}
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: inherit;
+    font-weight: 450;
+    background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));
 }
