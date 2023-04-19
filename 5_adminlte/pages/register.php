@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +18,34 @@
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition register-page">
+<?php
+      
+      if(isset($_SESSION["error"])){
+       echo <<< ERROR
+        <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+        $_SESSION[error]
+        </div>
+       ERROR;
+        
+        unset($_SESSION["error"]);
+      }   
+
+      if(isset($_SESSION["success"])){
+        echo <<< ERROR
+         <div class="alert alert-success alert-dismissible">
+         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+         <h5><i class="icon fas fa-user-plus"></i> Komunikat!</h5>
+         $_SESSION[success]
+         </div>
+        ERROR;
+         
+         unset($_SESSION["success"]);
+       }  
+    ?>
 <div class="register-box">
+  
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="../../index2.html" class="h1"><b>taka</b>rejestracja</a>
@@ -90,7 +120,16 @@
         </div>
 
         <div class="input-group mb-3">
-          <input type="number" class="form-control" placeholder="Podaj id miasta" name="city_id">
+        <select class="custom-select">
+          <?php
+          require_once "./scripts/connect1.php";
+            $sql = "SELECT * FROM cities";
+            $result = $conn->query($sql);
+            while($city = $result->fetch_assoc()){
+              echo "<option value='$city[id]'>$city[city]</option>";   
+            }
+          ?>
+            </select>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-city"></span>
