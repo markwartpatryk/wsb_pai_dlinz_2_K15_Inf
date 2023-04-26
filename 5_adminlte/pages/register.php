@@ -120,7 +120,7 @@ session_start();
         </div>
 
         <div class="input-group mb-3">
-        <select class="custom-select">
+        <select class="form-control" name="city_id">
           <?php
           require_once "./scripts/connect1.php";
             $sql = "SELECT * FROM cities";

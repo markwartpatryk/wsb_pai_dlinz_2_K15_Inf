@@ -1,8 +1,8 @@
 <?php
 session_start();
-//echo "<pre>";
-//print_r($_POST);
-//echo "</pre>";
+echo "<pre>";
+print_r($_POST);
+echo "</pre>";
 foreach ($_POST as $key => $value)
 {
     if (empty($value)){
