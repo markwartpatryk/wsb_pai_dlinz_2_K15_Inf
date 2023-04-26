@@ -102,8 +102,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `city_id`, `firstName`, `lastName`, `birthday`, `password`, `created_at`) VALUES
-(4, 'test@op.pl', 3, 'test', 'test', '2023-04-01', '$argon2id$v=19$m=65536,t=4,p=1$YnAueEhKMEFQZkIwa0tlWQ$ar82xiyD2sVjYAeyyNfSM7tm4DLEfeg0jG8Xg++tGYw', '2023-04-26 09:51:40');
+
 
 --
 -- Indeksy dla zrzutów tabel
