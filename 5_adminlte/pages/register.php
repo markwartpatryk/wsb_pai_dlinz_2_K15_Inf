@@ -137,6 +137,20 @@ session_start();
           </div>
         </div>
 
+        <div class="input-group mb-3">
+        <div class="form-check">
+        <input class="form-check-input" type="radio" value="m" name="plec" checked>
+        <label class="form-check-label" >Mężczyzna</label>
+        </div>
+      </div>
+      <div class="input-group mb-3">
+        <div class="form-check">
+        <input class="form-check-input" type="radio" value="w" name="plec">
+        <label class="form-check-label">Kobieta</label>
+        </div>
+      </div>
+
+
         <div class="row">
           <div class="col-7">
             <div class="icheck-primary">

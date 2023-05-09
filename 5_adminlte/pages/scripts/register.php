@@ -1,8 +1,9 @@
 <?php
 session_start();
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
+require_once "./connect1.php";
+//echo "<pre>";
+//print_r($_POST);
+//echo "</pre>";
 foreach ($_POST as $key => $value)
 {
     if (empty($value)){
@@ -17,11 +18,32 @@ foreach ($_POST as $key => $value)
         exit();
     }
 //duplikacja adresu email
+$stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+$stmt -> bind_param("s",$_POST["email1"]);
+$stmt ->execute();
+$result =$stmt->get_result();
+if ($result->num_rows !=0) {
+    $_SESSION["error"] = "Adres email $_POST[email1] jest już zajęty";
+    echo "<script>history.back();</script>";
+    exit();
+  }
 
     if($_POST["password1"]!=$_POST["password2"]){
         $_SESSION["error"] = "Podane hasła różnią się od siebie!";
         echo "<script>history.back()</script>";
         exit();
+    }
+    if(!isset($_POST["plec"])){
+        $_SESSION["error"]="Wybierz płeć";
+        echo "<script>history.back();</script>";
+        exit(); 
+    }
+    if ($_POST["plec"]=="w") {
+        $gender = "w";
+        $avatar = "../../img/woman.png";
+    } else {
+        $gender = "m";
+        $avatar = "../../img/man.png";
     }
     
 
@@ -32,11 +54,11 @@ foreach ($_POST as $key => $value)
         exit();
     }
 }
-require_once "./connect1.php";
-$stmt = $conn->prepare("INSERT INTO `users` (`email`, `city_id`, `firstName`, `lastName`, `birthday`, `password`, `created_at`) VALUES ( ?, ?, ?, ?, ?, ?, current_timestamp());");
+
+$stmt = $conn->prepare("INSERT INTO `users` (`email`, `city_id`, `firstName`, `lastName`, `birthday`, `gender`, `avatar`, `password`, `created_at`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp());");
 $pass = password_hash('$_POST["password1"]', PASSWORD_ARGON2ID);
 //$stmt = $mysqli->prepare("INSERT INTO users VALUES()");
-$stmt->bind_param('sissss', $_POST["email1"], $_POST["city_id"], $_POST["firstName"], $_POST["lastName"], $_POST["birthday"], $pass);
+$stmt->bind_param('sissssss', $_POST["email1"], $_POST["city_id"], $_POST["firstName"], $_POST["lastName"], $_POST["birthday"], $gender, $avatar, $pass);
 
 $stmt->execute();
 //echo $stmt->affected_rows;
