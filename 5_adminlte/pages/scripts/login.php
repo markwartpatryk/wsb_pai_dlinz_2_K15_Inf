@@ -17,6 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST'){
         header("location: ../index.php?error=".urlencode($error_msg));
         exit();
     }
+    if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) != true){
+        $error_msg ="Wprowadź poprawny adres email";
+        header("location: ../index.php?error=".urlencode($error_msg));
+        exit();
+    }else
+        echo "email: ".$_POST["email"].", hasło: ".$_POST["pass"];
    
 }else{
     header("location: ../index.php");

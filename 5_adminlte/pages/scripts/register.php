@@ -27,9 +27,14 @@ if ($result->num_rows !=0) {
     echo "<script>history.back();</script>";
     exit();
   }
-
+    //walidacja hasła
     if($_POST["password1"]!=$_POST["password2"]){
         $_SESSION["error"] = "Podane hasła różnią się od siebie!";
+        echo "<script>history.back()</script>";
+        exit();
+    }
+    if(!preg_match('/^(?=.*[a-z])(?=>*[A-Z])(?=.*\d)(?=.*[^\w\d\s])\S{8,}$/', $_POST["password1"])){
+        $_SESSION["error"] = "Podane hasło nie spełnia wymagań!";
         echo "<script>history.back()</script>";
         exit();
     }
