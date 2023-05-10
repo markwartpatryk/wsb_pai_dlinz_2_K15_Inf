@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2023 at 09:56 AM
--- Wersja serwera: 10.4.28-MariaDB
--- Wersja PHP: 8.2.4
+-- Czas generowania: 10 Maj 2023, 10:50
+-- Wersja serwera: 10.4.11-MariaDB
+-- Wersja PHP: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `wsb_register`
+-- Baza danych: `wsb_register`
 --
 
 -- --------------------------------------------------------
@@ -31,10 +32,10 @@ CREATE TABLE `cities` (
   `id` int(11) UNSIGNED NOT NULL,
   `state_id` int(10) UNSIGNED NOT NULL,
   `city` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `cities`
+-- Zrzut danych tabeli `cities`
 --
 
 INSERT INTO `cities` (`id`, `state_id`, `city`) VALUES
@@ -51,10 +52,10 @@ INSERT INTO `cities` (`id`, `state_id`, `city`) VALUES
 CREATE TABLE `countries` (
   `id` int(10) UNSIGNED NOT NULL,
   `country` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `countries`
+-- Zrzut danych tabeli `countries`
 --
 
 INSERT INTO `countries` (`id`, `country`) VALUES
@@ -70,10 +71,10 @@ CREATE TABLE `states` (
   `id` int(10) UNSIGNED NOT NULL,
   `country_id` int(10) UNSIGNED NOT NULL,
   `state` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `states`
+-- Zrzut danych tabeli `states`
 --
 
 INSERT INTO `states` (`id`, `country_id`, `state`) VALUES
@@ -94,15 +95,18 @@ CREATE TABLE `users` (
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(50) NOT NULL,
   `birthday` date NOT NULL,
+  `gender` varchar(20) NOT NULL,
+  `avatar` varchar(60) NOT NULL,
   `password` varchar(100) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `users`
+-- Zrzut danych tabeli `users`
 --
 
-
+INSERT INTO `users` (`id`, `email`, `city_id`, `firstName`, `lastName`, `birthday`, `gender`, `avatar`, `password`, `created_at`) VALUES
+(5, 'test@op.pl', 1, 'test', 'test', '2023-05-07', 'm', '../../img/man.png', '$argon2id$v=19$m=65536,t=4,p=1$b1JTZ1ZSdHFwMGcvdUMvTA$IxREB4OuiHL65Oqw55VDHdBxlE8bRLketD65kBFNg1c', '2023-05-10 10:48:33');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -140,47 +144,47 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `cities`
+-- AUTO_INCREMENT dla tabeli `cities`
 --
 ALTER TABLE `cities`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `countries`
+-- AUTO_INCREMENT dla tabeli `countries`
 --
 ALTER TABLE `countries`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `states`
+-- AUTO_INCREMENT dla tabeli `states`
 --
 ALTER TABLE `states`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- Constraints for dumped tables
+-- Ograniczenia dla zrzutów tabel
 --
 
 --
--- Constraints for table `cities`
+-- Ograniczenia dla tabeli `cities`
 --
 ALTER TABLE `cities`
   ADD CONSTRAINT `cities_ibfk_1` FOREIGN KEY (`state_id`) REFERENCES `states` (`id`);
 
 --
--- Constraints for table `states`
+-- Ograniczenia dla tabeli `states`
 --
 ALTER TABLE `states`
   ADD CONSTRAINT `states_ibfk_1` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`);
 
 --
--- Constraints for table `users`
+-- Ograniczenia dla tabeli `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);

@@ -33,21 +33,18 @@ if ($result->num_rows !=0) {
         echo "<script>history.back()</script>";
         exit();
     }
-    if(!isset($_POST["plec"])){
+    if(!isset($_POST["gender"])){
         $_SESSION["error"]="Wybierz płeć";
         echo "<script>history.back();</script>";
         exit(); 
     }
-    if ($_POST["plec"]=="w") {
-        $gender = "w";
+    if ($_POST["gender"]=="w") {
+        $gender = "woman";
         $avatar = "../../img/woman.png";
     } else {
-        $gender = "m";
+        $gender = "man";
         $avatar = "../../img/man.png";
     }
-    
-
-    
     if(!isset($_POST["terms"])){
         $_SESSION["error"] = "Zaakceptuj regulamin!";
         echo "<script>history.back()</script>";
@@ -62,6 +59,7 @@ $stmt->bind_param('sissssss', $_POST["email1"], $_POST["city_id"], $_POST["first
 
 $stmt->execute();
 //echo $stmt->affected_rows;
+
 if($conn->affected_rows == 1){
     
     $_SESSION["success"] = "Prawidłowo dodano użytownika  $_POST[firstName] $_POST[lastName]";

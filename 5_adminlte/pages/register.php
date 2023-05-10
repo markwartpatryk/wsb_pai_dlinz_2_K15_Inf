@@ -139,13 +139,13 @@ session_start();
 
         <div class="input-group mb-3">
         <div class="form-check">
-        <input class="form-check-input" type="radio" value="m" name="plec" checked>
+        <input class="form-check-input" type="radio" value="m" name="gender" checked>
         <label class="form-check-label" >Mężczyzna</label>
         </div>
       </div>
       <div class="input-group mb-3">
         <div class="form-check">
-        <input class="form-check-input" type="radio" value="w" name="plec">
+        <input class="form-check-input" type="radio" value="w" name="gender">
         <label class="form-check-label">Kobieta</label>
         </div>
       </div>
@@ -179,7 +179,7 @@ session_start();
         </a>
       </div>
 
-      <a href="login.html" class="text-center">I already have a membership</a>
+      <a href="./index.php" class="text-center">Posiadam już konto - zaloguj sie</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->
