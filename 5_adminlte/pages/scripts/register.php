@@ -1,4 +1,16 @@
 <?php
+
+function sanitizeInput(&$input){
+    $input = stripslashes($input);
+    $input = htmlentities($input);
+    $input = trim($input);
+    return $input;
+}
+
+
+echo $_POST["firstName"]." ==> " .sanitizeInput($_POST["firstName"]).",ilość znaków: " .strlen($_POST["firstName"]);
+
+exit();
 if($_SERVER["REQUEST_METHOD"]== "POST"){
     
     session_start();
