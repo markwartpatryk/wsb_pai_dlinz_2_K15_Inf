@@ -8,9 +8,9 @@ function sanitizeInput(&$input){
 }
 
 
-echo $_POST["firstName"]." ==> " .sanitizeInput($_POST["firstName"]).",ilość znaków: " .strlen($_POST["firstName"]);
+//echo $_POST["firstName"]." ==> " .sanitizeInput($_POST["firstName"]).",ilość znaków: " .strlen($_POST["firstName"]);
 
-exit();
+
 if($_SERVER["REQUEST_METHOD"]== "POST"){
     
     session_start();
@@ -67,8 +67,6 @@ if($_SERVER["REQUEST_METHOD"]== "POST"){
         $errors[] = "Zatwierdź regulamin!";
     }
 
-    
-
     if(!empty($errors)){
         $_SESSION["error"] = implode("<br>", $errors);
         echo "<script>history.back()</script>";
@@ -92,6 +90,12 @@ if($_SERVER["REQUEST_METHOD"]== "POST"){
     } else {
         $gender = "man";
         $avatar = "../../img/man.png";
+    }
+
+    foreach($_POST as $key => $value){
+        if(!$_POST["password1"] && !$_POST["password2"]){
+            sanitizeInput($_POST["$key"]);
+        }
     }
 
 $stmt = $conn->prepare("INSERT INTO `users` (`email`, `additional_email`, `city_id`, `firstName`, `lastName`, `birthday`, `gender`, `avatar`, `password`, `created_at`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp());");
