@@ -18,6 +18,8 @@ session_start();
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition register-page">
+
+<div class="register-box">
 <?php
       
       if(isset($_SESSION["error"])){
@@ -44,7 +46,6 @@ session_start();
          unset($_SESSION["success"]);
        }  
     ?>
-<div class="register-box">
   
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
@@ -84,6 +85,24 @@ session_start();
 
         <div class="input-group mb-3">
           <input type="email" class="form-control" placeholder="Powtórz email" name="email2">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Podaj dodatkowy email" name="additional_email1">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" placeholder="Powtórz dodatkowy email" name="additional_email2">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
