@@ -37,9 +37,11 @@ if($result->num_rows != 0){
     if(password_verify($_POST["pass"], $user["password"])){
         $_SESSION["logged"]["firstName"] = $user["firstName"];
         $_SESSION["logged"]["lastName"] = $user["lastName"];
-        //$_SESSION["logged"]["role_id"] = $user["role_id"];
+        $_SESSION["logged"]["role_id"] = $user["role_id"];
+        $_SESSION["logged"]["session_id"] = session_id();
 
-        print_r($_SESSION["logged"]);
+        //print_r($_SESSION["logged"]);
+        header("location: ../logged.php");
         exit();
     }else{
         $_SESSION["error"] = "Błędny login lub hasło!";

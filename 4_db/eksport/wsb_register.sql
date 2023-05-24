@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 10 Maj 2023, 10:50
+-- Czas generowania: 24 Maj 2023, 13:18
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.2
 
@@ -64,6 +64,26 @@ INSERT INTO `countries` (`id`, `country`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktura tabeli dla tabeli `role`
+--
+
+CREATE TABLE `role` (
+  `id` tinyint(4) NOT NULL,
+  `role` enum('user','moderator','administrator') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `role`
+--
+
+INSERT INTO `role` (`id`, `role`) VALUES
+(1, 'user'),
+(2, 'moderator'),
+(3, 'administrator');
+
+-- --------------------------------------------------------
+
+--
 -- Struktura tabeli dla tabeli `states`
 --
 
@@ -91,7 +111,9 @@ INSERT INTO `states` (`id`, `country_id`, `state`) VALUES
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
   `email` varchar(100) NOT NULL,
+  `additional_email` varchar(100) DEFAULT NULL,
   `city_id` int(10) UNSIGNED NOT NULL,
+  `role_id` tinyint(4) NOT NULL DEFAULT 1,
   `firstName` varchar(30) NOT NULL,
   `lastName` varchar(50) NOT NULL,
   `birthday` date NOT NULL,
@@ -105,8 +127,8 @@ CREATE TABLE `users` (
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `city_id`, `firstName`, `lastName`, `birthday`, `gender`, `avatar`, `password`, `created_at`) VALUES
-(5, 'test@op.pl', 1, 'test', 'test', '2023-05-07', 'm', '../../img/man.png', '$argon2id$v=19$m=65536,t=4,p=1$b1JTZ1ZSdHFwMGcvdUMvTA$IxREB4OuiHL65Oqw55VDHdBxlE8bRLketD65kBFNg1c', '2023-05-10 10:48:33');
+INSERT INTO `users` (`id`, `email`, `additional_email`, `city_id`, `role_id`, `firstName`, `lastName`, `birthday`, `gender`, `avatar`, `password`, `created_at`) VALUES
+(3, 'admin@op.pl', 'admin@op.pl', 1, 3, 'Janusz', 'Nowak', '2023-05-06', 'man', '../../img/man.png', '$argon2id$v=19$m=65536,t=4,p=1$QWNYa1hFckJWdjQ5aUNzVQ$92S0kKbc2/baJRhlBg6YuiXLW61cGKCvdo+EokCbUsw', '2023-05-24 10:42:58');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -126,6 +148,12 @@ ALTER TABLE `countries`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeksy dla tabeli `role`
+--
+ALTER TABLE `role`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeksy dla tabeli `states`
 --
 ALTER TABLE `states`
@@ -137,7 +165,8 @@ ALTER TABLE `states`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `city_id` (`city_id`);
+  ADD KEY `city_id` (`city_id`),
+  ADD KEY `role_id` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -156,6 +185,12 @@ ALTER TABLE `countries`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT dla tabeli `role`
+--
+ALTER TABLE `role`
+  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT dla tabeli `states`
 --
 ALTER TABLE `states`
@@ -165,7 +200,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ograniczenia dla zrzutów tabel
@@ -187,7 +222,8 @@ ALTER TABLE `states`
 -- Ograniczenia dla tabeli `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`);
+  ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`city_id`) REFERENCES `cities` (`id`),
+  ADD CONSTRAINT `users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
