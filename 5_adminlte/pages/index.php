@@ -7,7 +7,7 @@ session_start();
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Log in (v2)</title>
+  <title>Logowanko</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,20 +24,42 @@ session_start();
   <!-- /.login-logo -->
 
 <?php
-  if (isset($_GET["error"])){
+  if (isset($_GET["error"]) || isset($_SESSION["error"])){
     echo <<< ERROR
-    <div class="callout callout-danger">
-    <h5>Błąd!</h5>
-    <p>$_GET[error]</p>
-    </div>
+      <div class="callout callout-danger">
+        <h5>Błąd!</h5>
+        <p>
     ERROR;
+            if(isset($_GET["error"])){
+                echo $_GET["error"];
+                
+            }else if(isset($_SESSION["error"])){
+                echo $_SESSION["error"];
+                unset($_SESSION["error"]);
+            }
+    echo <<< ERROR
+        </p>
+      </div>
+    ERROR;
+    
+    
+  }
+  if (isset($_SESSION["success"])){
+    echo <<< ERROR
+      <div class="alert alert-success alert-dismissible">
+        <h5>Brawo!</h5>
+        <p>$_SESSION[success]</p>
+      </div>
+    ERROR;
+    unset($_SESSION["success"]);
+    
   }
 
 ?>
 
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../index2.html" class="h1"><b>Admin</b>LTE</a>
+      <a href="./" class="h1">takie<b>Logowanko</b></a>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>

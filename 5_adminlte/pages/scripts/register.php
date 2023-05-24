@@ -99,7 +99,7 @@ if($_SERVER["REQUEST_METHOD"]== "POST"){
     }
 
 $stmt = $conn->prepare("INSERT INTO `users` (`email`, `additional_email`, `city_id`, `firstName`, `lastName`, `birthday`, `gender`, `avatar`, `password`, `created_at`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, current_timestamp());");
-$pass = password_hash('$_POST["password1"]', PASSWORD_ARGON2ID);
+$pass = password_hash($_POST["password1"], PASSWORD_ARGON2ID);
 //$stmt = $mysqli->prepare("INSERT INTO users VALUES()");
 $stmt->bind_param('ssissssss', $_POST["email1"], $_POST["additional_email1"], $_POST["city_id"], $_POST["firstName"], $_POST["lastName"], $_POST["birthday"], $gender, $avatar, $pass);
 
@@ -109,6 +109,8 @@ $stmt->execute();
 if($conn->affected_rows == 1){
     
     $_SESSION["success"] = "Prawidłowo dodano użytownika  $_POST[firstName] $_POST[lastName]";
+    header("location: ../index.php");
+    exit();
     
 }else{
     
