@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (isset($_SESSION["logged"]) && session_status() == 2 && session_id() != $_SESSION["logged"]["session_id"]){
+  header("location: ./logged.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +53,16 @@ session_start();
       <div class="alert alert-success alert-dismissible">
         <h5>Brawo!</h5>
         <p>$_SESSION[success]</p>
+      </div>
+    ERROR;
+    unset($_SESSION["success"]);
+    
+  }
+  if (isset($_GET["logout"])){
+    echo <<< ERROR
+      <div class="callout callout-info">
+        <h5>Brawo!</h5>
+        <p>Prawidlowo wylogowano uzytkownika</p>
       </div>
     ERROR;
     unset($_SESSION["success"]);
