@@ -1,4 +1,13 @@
-
+ <!-- Google Font: Source Sans Pro -->
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/adminlte.min.css">
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -517,7 +526,7 @@ COUNT;
 
                     echo <<< USER
                       <li>
-                        <img src="../dist/img/user1-128x128.jpg" alt="User Image">
+                        <img src="../dist/img/$user[avatar]" alt="User Image">
                         <a class="users-list-name" href="#">$user[firstName] $user[lastName]</a>
                         <span class="users-list-date">$status <br> $user[logcreate]</span>
 
@@ -832,8 +841,10 @@ USER;
               <div class="card-footer text-center">
                 <a href="javascript:void(0)" class="uppercase">View All Products</a>
               </div>
+              
               <!-- /.card-footer -->
             </div>
+            
             <!-- /.card -->
           </div>
           <!-- /.col -->
@@ -841,5 +852,149 @@ USER;
         <!-- /.row -->
       </div><!--/. container-fluid -->
     </section>
+    <div class="card">
+<div class="card-header">
+<h3 class="card-title">DataTable with default features</h3>
+</div>
+
+<div class="card-body">
+<div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+  <div class="row"><div class="col-sm-12 col-md-6"><div class="dt-buttons btn-group flex-wrap">              
+    <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button">
+      <span>Copy</span>
+    </button> 
+    <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0" aria-controls="example1" type="button">
+      <span>CSV</span>
+    </button> 
+    <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0" aria-controls="example1" type="button">
+      <span>Excel</span>
+    </button> 
+    <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0" aria-controls="example1" type="button">
+      <span>PDF</span>
+    </button> 
+    <button class="btn btn-secondary buttons-print" tabindex="0" aria-controls="example1" type="button">
+      <span>Print</span>
+    </button> 
+    <div class="btn-group"><button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis" tabindex="0" aria-controls="example1" type="button" aria-haspopup="true" aria-expanded="false">
+      <span>Column visibility</span>
+      <span class="dt-down-arrow"></span>
+    </button>
+  </div> 
+</div>
+</div>
+<div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter">
+  <label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="example1">
+</label>
+</div>
+</div>
+</div>
+<div class="row"><div class="col-sm-12"><table id="example1" class="table table-bordered table-striped dataTable dtr-inline" aria-describedby="example1_info">
+<thead>
+<tr>
+  <th class="sorting sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-sort="ascending">Imię</th>
+  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Nazwisko</th>
+  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Miasto</th>
+  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Data utworzenia</th>
+  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Data ostatniego logowania</th>
+  <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1">Rola</th>
+</tr>
+</thead>
+<tbody>
+<?php
+  
+  require_once "./scripts/connect1.php";
+  $stmt = $conn->prepare("SELECT *, u.created_at as utworzenie, l.created_at as logcreate, r.role FROM users u INNER JOIN role r on u.role_id = r.id LEFT JOIN logi l ON u.id = l.user_id INNER JOIN cities c ON c.id = u.city_id");
+  $stmt->execute();
+  $result = $stmt->get_result();
+  while($user = $result->fetch_assoc()){
+
+    echo <<< COUNT
+    <tr class="odd">
+    <td class="dtr-control sorting_1" tabindex="0">$user[firstName]</td>
+    <td>$user[lastName]</td>
+    <td>$user[city]</td>
+    <td>$user[utworzenie]</td>
+    <td>$user[logcreate]</td>
+    <td>$user[role]</td>
+COUNT;
+  }
+    
+?>
+
+</table>
+</div>
+</div>
+<div class="row">
+  <div class="col-sm-12 col-md-5">
+    <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 10 of 57 entries</div>
+  </div>
+  <div class="col-sm-12 col-md-7">
+    <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
+      <ul class="pagination"><li class="paginate_button page-item previous disabled" id="example1_previous">
+        <a href="#" aria-controls="example1" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+      </li>
+      <li class="paginate_button page-item active">
+        <a href="#" aria-controls="example1" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+      </li>
+      <li class="paginate_button page-item ">
+        <a href="#" aria-controls="example1" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+      </li>
+      <li class="paginate_button page-item ">
+        <a href="#" aria-controls="example1" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+      </li>
+      <li class="paginate_button page-item ">
+        <a href="#" aria-controls="example1" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+      </li>
+      <li class="paginate_button page-item ">
+        <a href="#" aria-controls="example1" data-dt-idx="5" tabindex="0" class="page-link">5</a>
+      </li>
+      <li class="paginate_button page-item ">
+        <a href="#" aria-controls="example1" data-dt-idx="6" tabindex="0" class="page-link">6</a>
+      </li>
+      <li class="paginate_button page-item next" id="example1_next">
+        <a href="#" aria-controls="example1" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+      </li>
+    </ul>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<script src="../plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="../plugins/jszip/jszip.min.js"></script>
+<script src="../plugins/pdfmake/pdfmake.min.js"></script>
+<script src="../plugins/pdfmake/vfs_fonts.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<script src="../dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+</div>
     <!-- /.content -->
   </div>

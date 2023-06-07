@@ -86,10 +86,10 @@ if($_SERVER["REQUEST_METHOD"]== "POST"){
 
     if ($_POST["gender"]=="w") {
         $gender = "woman";
-        $avatar = "../../img/woman.png";
+        $avatar = "../img/woman.png";
     } else {
         $gender = "man";
-        $avatar = "../../img/man.png";
+        $avatar = "../img/man.png";
     }
 
     foreach($_POST as $key => $value){
