@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 24 Maj 2023, 13:18
+-- Czas generowania: 07 Cze 2023, 13:56
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.2
 
@@ -60,6 +60,28 @@ CREATE TABLE `countries` (
 
 INSERT INTO `countries` (`id`, `country`) VALUES
 (1, 'Polska');
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `logi`
+--
+
+CREATE TABLE `logi` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `address_ip` varchar(15) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Zrzut danych tabeli `logi`
+--
+
+INSERT INTO `logi` (`id`, `user_id`, `status`, `address_ip`, `created_at`) VALUES
+(6, 3, 1, '::1', '2023-06-07 10:43:19'),
+(7, 3, 1, '::1', '2023-06-07 10:44:10');
 
 -- --------------------------------------------------------
 
@@ -128,7 +150,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `additional_email`, `city_id`, `role_id`, `firstName`, `lastName`, `birthday`, `gender`, `avatar`, `password`, `created_at`) VALUES
-(3, 'admin@op.pl', 'admin@op.pl', 1, 3, 'Janusz', 'Nowak', '2023-05-06', 'man', '../../img/man.png', '$argon2id$v=19$m=65536,t=4,p=1$QWNYa1hFckJWdjQ5aUNzVQ$92S0kKbc2/baJRhlBg6YuiXLW61cGKCvdo+EokCbUsw', '2023-05-24 10:42:58');
+(3, 'admin@op.pl', 'admin@op.pl', 1, 3, 'Janusz', 'Nowak', '2023-05-06', 'man', '../../img/man.png', '$argon2id$v=19$m=65536,t=4,p=1$QWNYa1hFckJWdjQ5aUNzVQ$92S0kKbc2/baJRhlBg6YuiXLW61cGKCvdo+EokCbUsw', '2023-05-24 10:42:58'),
+(4, 'user@op.pl', 'user@op.pl', 3, 1, 'Grzesio', 'Nowal', '2023-06-15', 'man', '../../img/man.png', '$argon2id$v=19$m=65536,t=4,p=1$MHNRcElZZDVOWTcvOTNjMQ$Vxso6vh043XX+AhKJP62PFA/uRzIXmMvFi9ldHG7wnk', '2023-06-07 09:53:29');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -146,6 +169,13 @@ ALTER TABLE `cities`
 --
 ALTER TABLE `countries`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `logi`
+--
+ALTER TABLE `logi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indeksy dla tabeli `role`
@@ -185,6 +215,12 @@ ALTER TABLE `countries`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT dla tabeli `logi`
+--
+ALTER TABLE `logi`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT dla tabeli `role`
 --
 ALTER TABLE `role`
@@ -200,7 +236,7 @@ ALTER TABLE `states`
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Ograniczenia dla zrzutów tabel
