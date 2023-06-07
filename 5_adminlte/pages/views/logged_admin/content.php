@@ -484,9 +484,18 @@
                 <div class="card">
                   <div class="card-header">
                     <h3 class="card-title"> <u>Użytkownicy</u></h3>
-
                     <div class="card-tools">
-                      <span class="badge badge-danger">? użytkowników</span>
+                    <?php
+                  require_once "./scripts/connect1.php";
+                  $stmt = $conn->prepare("SELECT *, l.created_at as logcreate, r.role FROM users u INNER JOIN role r on u.role_id = r.id LEFT JOIN logi l ON u.id = l.user_id");
+                  $stmt->execute();
+                  $result = $stmt->get_result();
+                  $countUsers = $result->num_rows;
+                    echo <<< COUNT
+                    <span class="badge badge-danger">$countUsers użytkowników</span>
+COUNT;
+                      
+                    ?>
                       <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-minus"></i>
                       </button>
@@ -496,31 +505,28 @@
                     </div>
                   </div>
                   <!-- /.card-header -->
-                  <?php
-                    require_once "./scripts/connect1.php";
-                    $stmt = $conn->prepare("SELECT u.firstName, u.lastName, r.role FROM users u INNER JOIN roles r ON u.role_id = r.id");
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $countUsers = $result->num_rows;
-                    while($users = $result->fetch_assoc()){
-                      echo <<< USER
-                      <li>
-                       
-                      <img src="../dist/img/user1-128x128.jpg" alt="User Image">
-                      <a class="users-list-name" href="#">$user[firstName]  $user[lastName]</a>
-                      <span class="users-list-date">Today</span>
-                    </li>
-USER;
-                    }
-                  ?>
                   <div class="card-body p-0">
                     <ul class="users-list clearfix">
+                 <?php
+                  while($user = $result->fetch_assoc()){
+                    if($user["status"] == 1){
+                      $status = "zalogowany";
+                    }else{
+                      $status = "niezalogowany";
+                    }
+
+                    echo <<< USER
                       <li>
-                       
                         <img src="../dist/img/user1-128x128.jpg" alt="User Image">
-                        <a class="users-list-name" href="#">Alexander Pierce</a>
-                        <span class="users-list-date">Today</span>
-                      </li>
+                        <a class="users-list-name" href="#">$user[firstName] $user[lastName]</a>
+                        <span class="users-list-date">$status <br> $user[logcreate]</span>
+
+										  </li>
+USER;
+                  }
+                ?>
+                 
+                     
                     </ul>
                     <!-- /.users-list -->
                   </div>

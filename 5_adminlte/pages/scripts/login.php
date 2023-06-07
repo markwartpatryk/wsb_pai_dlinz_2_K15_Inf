@@ -31,8 +31,13 @@ $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
 $stmt->bind_param("s", $_POST["email"]);
 $stmt->execute();
 $result = $stmt->get_result();
+
 if($result->num_rows != 0){
     $user = $result->fetch_assoc();
+
+    $user_id = $user["id"];
+    $address_ip = $_SERVER["REMOTE_ADDR"];
+
     //print_r($user);
     if(password_verify($_POST["pass"], $user["password"])){
         $_SESSION["logged"]["firstName"] = $user["firstName"];
@@ -40,6 +45,12 @@ if($result->num_rows != 0){
         $_SESSION["logged"]["role_id"] = $user["role_id"];
         $_SESSION["logged"]["session_id"] = session_id();
 
+        //logi
+
+        $stmt = $conn->prepare("INSERT INTO `logi` (`user_id`, `status`, `address_ip`) VALUES (?, '1', ?);");
+        $stmt->bind_param("is", $user_id, $address_ip);
+        $stmt->execute();
+        
         //print_r($_SESSION["logged"]);
         header("location: ../logged.php");
         exit();
